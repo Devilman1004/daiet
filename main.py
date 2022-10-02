@@ -97,8 +97,11 @@ with st.form(key='traning_form'):
         if undou == list(undou_list_df['運動'])[i]:
             mets = float(list(undou_list_df['METs'])[i])
             break
+        
+    syohi_calory = st.number_input('カロリー')
     
     undou_time = st.number_input('運動時間（分）')
+    
     touroku_buton = st.form_submit_button('登録')
     
     if touroku_buton:
@@ -112,7 +115,12 @@ with st.form(key='traning_form'):
         todo = undou
         weight = int(list(df['体重'])[-1])
         TaishibouRitsu = int(list(df['体脂肪率'])[-1])
-        undou_caloly = mets*weight*(undou_time/60)*1.05
+        
+        if syohi_calory==0:
+            undou_caloly = mets*weight*(undou_time/60)*1.05
+        else:
+            undou_caloly=syohi_calory
+            
         kitaiweight = float(list(df['期待体重'])[-1]) -  round(undou_caloly/7200,4)
         
         kari_li = [[today,gentime,todo,undou_caloly,weight,TaishibouRitsu,kitaiweight]]
