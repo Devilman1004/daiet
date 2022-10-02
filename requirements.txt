@@ -1,5 +1,4 @@
 gspread
-json
 pandas
 oauth2client.service_account
 datetime
