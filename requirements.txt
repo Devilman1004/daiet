@@ -1,5 +1,5 @@
 gspread
 pandas
-oauth2client.service_account
+oauth2client
 datetime
 gspread_dataframe
