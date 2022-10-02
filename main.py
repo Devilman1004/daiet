@@ -19,8 +19,7 @@ workbook = gc.open('ダイエット')
 
 st.title('ダイエット記録')
 
-st.header('目標：体重６２ｋｇ')
-st.header('　　　体脂肪率１５％')
+st.header('目標：\n体重６２ｋｇ\n体脂肪率１５％')
 
 sokutei_bt = st.button('測定結果入力')
 if sokutei_bt:
