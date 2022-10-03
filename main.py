@@ -83,6 +83,8 @@ with st.form(key='syokuzi_form'):
         
         set_with_dataframe(worksheet,df,include_index = False)
         
+        st.dataframe(df.tail(5))
+        
         st.text('登録完了')
 
 
@@ -130,5 +132,7 @@ with st.form(key='traning_form'):
         df = df.append(kari_df, ignore_index = True, sort=False)
         
         set_with_dataframe(worksheet, df,include_index = False)
+        
+        st.dataframe(df.tail(5))
         
         st.text('登録完了')
