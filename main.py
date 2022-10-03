@@ -69,8 +69,8 @@ with st.form(key='syokuzi_form'):
         today = datetime.date.today()
         gentime = datetime.datetime.now().time()
         todo = syokuzi
-        weight = int(list(df['体重'])[-1])
-        TaishibouRitsu = int(list(df['体脂肪率'])[-1])
+        weight = float(list(df['体重'])[-1])
+        TaishibouRitsu = float(list(df['体脂肪率'])[-1])
         kitaiweight = float(list(df['期待体重'])[-1]) + round(syokuzi_calory/7200,4)
         
         kari_li = [[today,gentime,todo,syokuzi_calory,weight,TaishibouRitsu,kitaiweight]]
@@ -113,8 +113,8 @@ with st.form(key='traning_form'):
         today = datetime.date.today()
         gentime = datetime.datetime.now().time()
         todo = undou
-        weight = int(list(df['体重'])[-1])
-        TaishibouRitsu = int(list(df['体脂肪率'])[-1])
+        weight = float(list(df['体重'])[-1])
+        TaishibouRitsu = float(list(df['体脂肪率'])[-1])
         
         if syohi_calory==0:
             undou_caloly = mets*weight*(undou_time/60)*1.05
