@@ -50,6 +50,7 @@ with st.form(key='sokutei_form'):
         
         set_with_dataframe(worksheet, df,include_index = False)
         
+        st.dataframe(df.tail(5))
         st.text('登録完了')
 
 
