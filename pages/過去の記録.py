@@ -20,4 +20,8 @@ df = pd.DataFrame(worksheet.get_all_values()[1:], columns=worksheet.get_all_valu
 
 st.title('過去の記録')
 
+chart_data = df[['日時','体重','体脂肪率','期待体重']].set_index('日時')
+
+st.line_chart(chart_data)
+
 st.dataframe(df)

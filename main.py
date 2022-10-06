@@ -25,8 +25,8 @@ st.write('目標：体重６２ｋｇ体脂肪率１５％')
 with st.form(key='sokutei_form'):
     st.write('測定結果入力')
     left,right=st.columns(2)
-    weight = left.number_input('体重')
-    TaishibouRitsu = right.number_input('体脂肪率')
+    weight = float(left.number_input('体重'))
+    TaishibouRitsu = float(right.number_input('体脂肪率'))
     
     touroku_buton = st.form_submit_button('登録')
     
@@ -36,13 +36,15 @@ with st.form(key='sokutei_form'):
         worksheet = workbook.worksheet('記録')
         df = pd.DataFrame(worksheet.get_all_values()[1:], columns=worksheet.get_all_values()[0])
         
-        today = datetime.date.today()
-        gentime = datetime.datetime.now().time()
+        now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
+        
         todo = '測定'
         
-        kari_li = [[today,gentime,todo,0,weight,TaishibouRitsu,weight]]
+        kitaiweight = float(list(df['期待体重'])[-1])
         
-        kari_df = pd.DataFrame(data = kari_li, columns=['年月日','時間','やったこと','カロリー','体重','体脂肪率','期待体重'])
+        kari_li = [[now,todo,0,weight,TaishibouRitsu,kitaiweight]]
+        
+        kari_df = pd.DataFrame(data = kari_li, columns=['日時','やったこと','カロリー','体重','体脂肪率','期待体重'])
         
         df = df.append(kari_df, ignore_index = True, sort=False)
         
@@ -66,20 +68,17 @@ with st.form(key='syokuzi_form'):
         worksheet = workbook.worksheet('記録')
         df = pd.DataFrame(worksheet.get_all_values()[1:], columns=worksheet.get_all_values()[0])
         
-        today = datetime.date.today()
-        gentime = datetime.datetime.now().time()
+        now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
         todo = syokuzi
         weight = float(list(df['体重'])[-1])
         TaishibouRitsu = float(list(df['体脂肪率'])[-1])
         kitaiweight = float(list(df['期待体重'])[-1]) + round(syokuzi_calory/7200,4)
         
-        kari_li = [[today,gentime,todo,syokuzi_calory,weight,TaishibouRitsu,kitaiweight]]
+        kari_li = [[now,todo,syokuzi_calory,weight,TaishibouRitsu,kitaiweight]]
         
-        kari_df = pd.DataFrame(data = kari_li, columns=['年月日','時間','やったこと','カロリー','体重','体脂肪率','期待体重'])
+        kari_df = pd.DataFrame(data = kari_li, columns=['日時','やったこと','カロリー','体重','体脂肪率','期待体重'])
         
         df = df.append(kari_df, ignore_index = True, sort=False)
-        
-        st.dataframe(df.tail(5))
         
         set_with_dataframe(worksheet,df,include_index = False)
         
@@ -112,8 +111,7 @@ with st.form(key='traning_form'):
         worksheet = workbook.worksheet('記録')
         df = pd.DataFrame(worksheet.get_all_values()[1:], columns=worksheet.get_all_values()[0])
         
-        today = datetime.date.today()
-        gentime = datetime.datetime.now().time()
+        now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
         todo = undou
         weight = float(list(df['体重'])[-1])
         TaishibouRitsu = float(list(df['体脂肪率'])[-1])
@@ -121,13 +119,13 @@ with st.form(key='traning_form'):
         if syohi_calory==0:
             undou_caloly = mets*weight*(undou_time/60)*1.05
         else:
-            undou_caloly=syohi_calory
+            undou_caloly = syohi_calory
             
         kitaiweight = float(list(df['期待体重'])[-1]) -  round(undou_caloly/7200,4)
         
-        kari_li = [[today,gentime,todo,undou_caloly,weight,TaishibouRitsu,kitaiweight]]
+        kari_li = [[now,todo,undou_caloly,weight,TaishibouRitsu,kitaiweight]]
         
-        kari_df = pd.DataFrame(data = kari_li, columns=['年月日','時間','やったこと','カロリー','体重','体脂肪率','期待体重'])
+        kari_df = pd.DataFrame(data = kari_li, columns=['日時','やったこと','カロリー','体重','体脂肪率','期待体重'])
         
         df = df.append(kari_df, ignore_index = True, sort=False)
         
